@@ -1,14 +1,38 @@
 <?php
-  
-    // On gère la variable "action" reçu avec un switch
 
-switch ($_POST["action"]){
+$action = "";
+if(isset($_POST["action"])){
+    $action = $_POST["action"];
+}else if(isset($_GET["action"])){
+    $action = $_GET["action"];
+}
+
+ // On gère la variable "action" reçu avec un switch
+
+switch ($action){
     case 'add':
         addBook($_POST, $_FILES);
         break;
+        case 'delete':
+            deleteBook($_GET['id']);
+            break;
         default:
 }
  
+
+function deleteBook($id){
+    require_once("connexion.php");
+    $sql = 'SELECT liv_visuel FROM livre WHERE liv_id='.$id;
+    $req = mysqli_query($connexion, $sql)or die(mysqli_error($connexion));
+    $images = mysqli_fetch_array($req);
+
+    // Suppression de l'images
+    unlink("../images/".$image);
+    $sql= "DELETE FROM livre WHERE liv_id=".$id;
+    $req = mysqli_query($connexion, $sql) or die(mysqli_error($connexion));
+    header("Location:".$_SERVER["HTTP_REFERER"]);
+
+}
 
 function addBook($post, $files) {
     require_once("connexion.php");

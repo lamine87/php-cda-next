@@ -36,29 +36,29 @@
                                 </div>
                                 <form action="../core/livreManager.php" metdod="POST" enctype="multipart/form-data">
                                     <input type="hidden" name="action" value="add">
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="titre">Titre</label>
-                                        <input type="text" name="titre" id="titre" class="form-control" placeholder="Titre">
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="titre">Titre</label>
+                                            <input type="text" name="titre" id="titre" class="form-control" placeholder="Titre">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <textarea name="description" id="description" class="form-control" cols="30" rows="10" placeholder="Description"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="auteur">Auteur</label>
+                                            <input type="auteur" name="auteur" id="auteur" class="form-control" placeholder="Auteur">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="visuel">Visuel</label>
+                                            <input type="file" name="visuel" id="visuel" class="form-control" placeholder="Visuel">
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="description">Description</label>
-                                        <textarea name="description" id="description" class="form-control" cols="30" rows="10" placeholder="Description"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="auteur">Auteur</label>
-                                        <input type="auteur" name="auteur" id="auteur" class="form-control" placeholder="Auteur">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="visuel">Visuel</label>
-                                        <input type="file" name="visuel" id="visuel" class="form-control" placeholder="Visuel">
-                                    </div>
-                                </div>
 
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Sauvegarder</button>
-                                </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -70,6 +70,7 @@
                             <td>Id</td>
                             <td>Image</td>
                             <td>Titre</td>
+                            <td>Description</td>
                             <td>Auteur</td>
                             <td>Action</td>
                         </tr>
@@ -88,15 +89,25 @@
                         } else {
                             //   Avec une boucle while on fabrique les lignes html du tabkeau
                             while ($livre = mysqli_fetch_array($req)) {
-                        ?>
+                            ?>
                                 <tr>
                                     <td> <?php echo $livre["liv_id"]; ?> </td>
-                                    <td><img src="../images/<?php echo $livre["liv_visuel"]; ?>"alt="" class="img-list"></td>
+                                    <td><img src="../images/<?php echo $livre["liv_visuel"]; ?>" alt="" class="img-list"></td>
                                     <td> <?php echo $livre["liv_titre"]; ?> </td>
-                                    <td> <?php echo $livre["liv_auteur"]; ?> </td>
                                     <td> <?php echo $livre["liv_description"]; ?> </td>
+                                    <td> <?php echo $livre["liv_auteur"]; ?> </td>
+                                    <td class="d-inline-block">
+                                        <a href="../core/livreManager.php?action=delete&id=<?php echo $livre["liv_id"] ?>" class="btn btn-danger">
+                                            <i class="align-middle" data-feather="trash"></i>
+                                        </a>
+
+                                        <a href="../core/livreManager.php?action=update&id=<?php echo $livre["liv_id"] ?>" data-bs-toggle="modal" data-bs-target="#editModal" class="btn btn-primary ms-3">
+                                            <i class="align-middle " data-feather="edit-2"></i>
+                                        </a>
+                                        
+                                    </td>
                                 </tr>
-                        <?php
+                              <?php
                             }
                         }
                         ?>
@@ -114,6 +125,7 @@
     <?php
     if (file_exists('./inc/_js.php')) include './inc/_js.php';
     ?>
+    
 </body>
 
 </html>
