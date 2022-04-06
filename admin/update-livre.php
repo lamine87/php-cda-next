@@ -57,8 +57,7 @@
                                 <input type="file" name="visuel" id="visuel" class="form-control">
                             </div>
                                 </div>
-                            </div>
-                            
+                            </div> 
 
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Ajouter</button>
